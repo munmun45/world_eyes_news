@@ -19,6 +19,9 @@ Route::get('/', [NewsController::class, 'index'])->name('home');
 Route::get('/category/{slug}', [NewsController::class, 'category'])->name('category.show');
 Route::get('/article/{slug}', [NewsController::class, 'show'])->name('article.show');
 Route::get('/search', [NewsController::class, 'search'])->name('search');
+Route::get('/about', [NewsController::class, 'about'])->name('about');
+Route::get('/privacy-policy', [NewsController::class, 'privacy'])->name('privacy.policy');
+Route::get('/terms-and-conditions', [NewsController::class, 'terms'])->name('terms.conditions');
 Route::post('/article/{id}/comment', [NewsController::class, 'storeComment'])->name('comment.store');
 
 /*

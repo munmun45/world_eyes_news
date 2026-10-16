@@ -226,4 +226,28 @@ class NewsController extends Controller
 
         return redirect()->back()->with('comment_success', 'Thank you! Your comment has been published successfully.');
     }
+
+    /**
+     * About World Eyes News Page
+     */
+    public function about()
+    {
+        return view('frontend.about');
+    }
+
+    /**
+     * Privacy Policy Page
+     */
+    public function privacy()
+    {
+        return view('frontend.privacy');
+    }
+
+    /**
+     * Terms and Conditions Page
+     */
+    public function terms()
+    {
+        return view('frontend.terms');
+    }
 }

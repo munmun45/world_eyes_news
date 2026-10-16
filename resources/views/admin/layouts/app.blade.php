@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Admin Portal') - World Eyes News Management</title>
 
-    <link rel="icon" href="{{ asset('images/TN-36.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="36x36" href="{{ asset('images/TN-36.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('images/TN-192.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -306,7 +308,7 @@
         </main>
 
         <footer class="p-3 text-center text-muted small bg-white border-top">
-            World Eyes News CMS v2.0 • Powered by Laravel & MySQL
+            World Eyes News CMS v2.0 • Developed by <a href="https://munmunmaharana.in" target="_blank" rel="noopener noreferrer" class="text-danger fw-semibold text-decoration-none">Munmun</a>
         </footer>
     </div>
 
@@ -316,6 +318,17 @@
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.getElementById('adminSidebar').classList.toggle('show');
         });
+
+        // Global Image Error Fallback
+        document.addEventListener('error', function (e) {
+            if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
+                const fallbackUrl = "{{ asset('images/placeholder.png') }}";
+                if (e.target.src !== fallbackUrl && !e.target.classList.contains('main-brand-logo') && !e.target.classList.contains('footer-brand-logo')) {
+                    e.target.onerror = null;
+                    e.target.src = fallbackUrl;
+                }
+            }
+        }, true);
     </script>
     @stack('scripts')
 </body>

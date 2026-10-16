@@ -13,7 +13,7 @@
                 <div class="col-lg-7">
                     <div class="lead-story-card h-100">
                         <div class="lead-story-img-wrapper">
-                            <img src="{{ $leadStory->image_url }}" alt="{{ $leadStory->title }}" loading="eager">
+                            <img src="{{ $leadStory->image_url }}" alt="{{ $leadStory->title }}" loading="eager" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                             <div class="lead-story-overlay">
                                 <a href="{{ route('category.show', $leadStory->category->slug) }}" class="category-badge mb-2" style="background-color: {{ $leadStory->category->color ?? '#dc2626' }};">
                                     {{ $leadStory->category->name }}
@@ -49,7 +49,7 @@
                         <div class="col-sm-6 col-lg-12">
                             <div class="news-card p-3 d-flex flex-row gap-3 align-items-center h-100">
                                 <div class="flex-shrink-0" style="width: 110px; height: 80px; position: relative; border-radius: 6px; overflow: hidden;">
-                                    <img src="{{ $secStory->image_url }}" alt="{{ $secStory->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="{{ $secStory->image_url }}" alt="{{ $secStory->title }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                                 </div>
                                 <div class="flex-grow-1">
                                     <a href="{{ route('category.show', $secStory->category->slug) }}" class="category-badge mb-1" style="background-color: {{ $secStory->category->color ?? '#dc2626' }}; font-size: 0.65rem;">
@@ -87,7 +87,7 @@
                             <span class="category-badge badge-floating" style="background-color: {{ $tArticle->category->color ?? '#dc2626' }};">
                                 {{ $tArticle->category->name }}
                             </span>
-                            <img src="{{ $tArticle->image_url }}" alt="{{ $tArticle->title }}" loading="lazy">
+                            <img src="{{ $tArticle->image_url }}" alt="{{ $tArticle->title }}" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                         </div>
                         <div class="p-3 d-flex flex-column flex-grow-1">
                             <div class="text-danger fw-black serif-font mb-1" style="font-size: 1.1rem;">
@@ -129,15 +129,15 @@
                             $catSubs = $catSection->publishedArticles->slice(1, 4);
                         @endphp
 
-                        <div class="row g-3">
+                        <div class="row g-3 align-items-start">
                             <!-- Category Lead Card (6 cols) -->
                             <div class="col-md-6">
-                                <div class="news-card h-100">
+                                <div class="news-card">
                                     <div class="news-card-img-wrapper">
                                         <span class="category-badge badge-floating" style="background-color: {{ $catSection->color }};">
                                             {{ $catSection->name }}
                                         </span>
-                                        <img src="{{ $catLead->image_url }}" alt="{{ $catLead->title }}" loading="lazy">
+                                        <img src="{{ $catLead->image_url }}" alt="{{ $catLead->title }}" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                                     </div>
                                     <div class="p-3 d-flex flex-column flex-grow-1">
                                         <h5 class="serif-font fw-bold mb-2" style="line-height: 1.3;">
@@ -156,25 +156,23 @@
                                 </div>
                             </div>
 
-                            <!-- Category 3-4 side list (6 cols) -->
+                            <!-- Category 3-4 side list (6 cols) - Aligned to TOP, items stack cleanly downwards -->
                             <div class="col-md-6">
-                                <div class="d-flex flex-column gap-3 h-100">
+                                <div class="d-flex flex-column gap-2 justify-content-start">
                                     @foreach($catSubs as $sub)
-                                        <div class="news-card p-2 d-flex flex-row gap-2 align-items-center">
-                                            <div class="flex-shrink-0" style="width: 90px; height: 68px; border-radius: 6px; overflow: hidden;">
-                                                <img src="{{ $sub->image_url }}" alt="{{ $sub->title }}" style="width:100%; height:100%; object-fit: cover;">
+                                        <a href="{{ route('article.show', $sub->slug) }}" class="cat-sub-card">
+                                            <div class="cat-sub-card-img">
+                                                <img src="{{ $sub->image_url }}" alt="{{ $sub->title }}" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                                             </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="fw-bold mb-1" style="font-size: 0.85rem; line-height: 1.3;">
-                                                    <a href="{{ route('article.show', $sub->slug) }}">
-                                                        {{ Str::limit($sub->title, 60) }}
-                                                    </a>
+                                            <div class="cat-sub-card-content">
+                                                <h6 class="cat-sub-card-title">
+                                                    {{ $sub->title }}
                                                 </h6>
-                                                <span class="text-muted small" style="font-size: 0.72rem;">
-                                                    <i class="fa-regular fa-clock me-1"></i> {{ $sub->published_at ? $sub->published_at->diffForHumans() : 'Recently' }}
-                                                </span>
+                                                <div class="cat-sub-card-meta">
+                                                    <span><i class="fa-regular fa-clock me-1"></i> {{ $sub->published_at ? $sub->published_at->diffForHumans() : 'Recently' }}</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     @endforeach
                                 </div>
                             </div>
@@ -225,14 +223,17 @@
                 </div>
             </div>
 
-            <!-- Live Editorial Newsletter -->
+            <!-- Editorial Trust & Mission -->
             <div class="widget-box bg-dark text-white border-0" style="background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);">
-                <h5 class="fw-bold serif-font mb-2 text-white">Subscribe to Global Briefing</h5>
-                <p class="small text-secondary mb-3">Get our award-winning foreign affairs memo delivered every weekday at 06:00 GMT.</p>
-                <form onsubmit="event.preventDefault(); alert('Subscribed to Global Briefing successfully!'); this.reset();">
-                    <input type="email" class="form-control form-control-sm mb-2 bg-dark text-white border-secondary" placeholder="Your work email..." required>
-                    <button class="btn btn-danger btn-sm w-100 fw-bold" type="submit">Activate Free Subscription</button>
-                </form>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-danger">EDITORIAL TRUST</span>
+                    <span class="badge bg-secondary">MSME &amp; SSL</span>
+                </div>
+                <h6 class="fw-bold serif-font mb-2 text-white">Bringing The World Closer</h6>
+                <p class="small text-secondary mb-3">Managed by qualified journalists committed to responsible, accurate, and ethical reporting under PCI &amp; MIB guidelines.</p>
+                <a href="{{ route('about') }}" class="btn btn-outline-light btn-sm w-100 fw-semibold">
+                    Read Editorial Charter <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
             </div>
         </div>
     </div>

@@ -39,18 +39,18 @@ class DatabaseSeeder extends Seeder
         // 2. Settings
         $settings = [
             'site_name' => 'World Eyes News',
-            'tagline' => 'Global Insight, Uncompromised Truth',
+            'tagline' => 'Bringing The World Closer',
             'contact_email' => 'contact@worldeyesnews.com',
-            'contact_phone' => '+1 (800) 555-0199',
-            'address' => 'World News Media Tower, 5th Avenue, New York, NY',
-            'about_text' => 'World Eyes News is an independent international news organisation delivering real-time breaking news, investigative reporting, deep analysis, and multimedia stories spanning geopolitics, technology, business, culture, and sports across the globe.',
+            'contact_phone' => '',
+            'address' => '',
+            'about_text' => 'World Eyes News is an MSME-registered and SSL-secured digital news media platform, managed by qualified journalists and committed to responsible, accurate, and ethical journalism.',
             'footer_copyright' => '© ' . date('Y') . ' World Eyes News. All rights reserved.',
             'breaking_enabled' => '1',
-            'social_facebook' => 'https://facebook.com',
-            'social_twitter' => 'https://twitter.com',
-            'social_instagram' => 'https://instagram.com',
-            'social_youtube' => 'https://youtube.com',
-            'social_linkedin' => 'https://linkedin.com',
+            'social_facebook' => 'https://www.facebook.com/share/1Kk4FiRzTm/',
+            'social_twitter' => 'https://x.com/worldeyesnet',
+            'social_instagram' => 'https://instagram.com/worldeyesnetwork?obrf=amM4YnZvODJpcXdh',
+            'social_youtube' => 'https://youtube.com/@worldeyesnetwork?si=HvYlNr9HPBfPaPjN',
+            'social_linkedin' => '',
         ];
 
         foreach ($settings as $k => $v) {

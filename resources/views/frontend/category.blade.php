@@ -70,7 +70,7 @@
                                     @if($art->is_breaking)
                                         <span class="badge bg-danger position-absolute top-0 end-0 m-2"><i class="fa-solid fa-bolt"></i> Breaking</span>
                                     @endif
-                                    <img src="{{ $art->image_url }}" alt="{{ $art->title }}" loading="lazy">
+                                    <img src="{{ $art->image_url }}" alt="{{ $art->title }}" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                                 </div>
                                 <div class="p-3 d-flex flex-column flex-grow-1">
                                     <h5 class="serif-font fw-bold mb-2" style="font-size: 1.05rem; line-height: 1.35;">

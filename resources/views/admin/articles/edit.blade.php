@@ -144,7 +144,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold small text-dark d-block">Current Image:</label>
                     <div class="border rounded p-2 text-center bg-light">
-                        <img id="currentImageDisplay" src="{{ $article->image_url }}" alt="" class="img-fluid rounded" style="max-height: 160px; object-fit: cover;">
+                        <img id="currentImageDisplay" src="{{ $article->image_url }}" alt="" class="img-fluid rounded" style="max-height: 160px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                     </div>
                 </div>
 

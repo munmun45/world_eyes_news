@@ -66,14 +66,14 @@
                     <a href="https://twitter.com/intent/tweet?text={{ urlencode($article->title) }}&url={{ urlencode(request()->url()) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="https://api.whatsapp.com/send?text={{ urlencode($article->title . ' ' . request()->url()) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="WhatsApp"><i class="fa-brands fa-whatsapp text-success"></i></a>
-                    <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Copy Link" onclick="navigator.clipboard.writeText(window.location.href); alert('Article URL copied to clipboard!');"><i class="fa-regular fa-copy"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Copy Link" onclick="navigator.clipboard.writeText(window.location.href); this.innerHTML='<i class=\'fa-solid fa-check text-success\'></i>'; setTimeout(() => this.innerHTML='<i class=\'fa-regular fa-copy\'></i>', 2000);"><i class="fa-regular fa-copy"></i></button>
                 </div>
             </div>
 
             <!-- Featured Image -->
             <div class="mb-4">
                 <div class="rounded-3 overflow-hidden shadow-sm" style="max-height: 520px; background-color: #000;">
-                    <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="img-fluid w-100" style="object-fit: cover; max-height: 520px;">
+                    <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="img-fluid w-100" style="object-fit: cover; max-height: 520px;" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                 </div>
                 @if($article->image_caption)
                     <figcaption class="text-muted small mt-2 fst-italic">
@@ -176,11 +176,11 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold">Your Name *</label>
-                                <input type="text" name="name" class="form-control" placeholder="e.g. Eleanor Vance" required value="{{ old('name') }}">
+                                <input type="text" name="name" class="form-control" placeholder="Your full name" required value="{{ old('name') }}">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold">Email Address *</label>
-                                <input type="email" name="email" class="form-control" placeholder="e.g. eleanor@example.com" required value="{{ old('email') }}">
+                                <input type="email" name="email" class="form-control" placeholder="Your email address" required value="{{ old('email') }}">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -207,7 +207,7 @@
                         @foreach($relatedArticles as $rel)
                             <div class="trending-item">
                                 <div class="flex-shrink-0" style="width: 80px; height: 60px; border-radius: 4px; overflow: hidden;">
-                                    <img src="{{ $rel->image_url }}" alt="{{ $rel->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="{{ $rel->image_url }}" alt="{{ $rel->title }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="fw-bold mb-1" style="font-size: 0.85rem; line-height: 1.3;">

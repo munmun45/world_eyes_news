@@ -34,7 +34,7 @@
                             <span class="category-badge badge-floating" style="background-color: {{ $art->category->color ?? '#dc2626' }};">
                                 {{ $art->category->name }}
                             </span>
-                            <img src="{{ $art->image_url }}" alt="{{ $art->title }}" loading="lazy">
+                            <img src="{{ $art->image_url }}" alt="{{ $art->title }}" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                         </div>
                         <div class="p-3 d-flex flex-column flex-grow-1">
                             <h5 class="serif-font fw-bold mb-2" style="font-size: 1.05rem; line-height: 1.35;">

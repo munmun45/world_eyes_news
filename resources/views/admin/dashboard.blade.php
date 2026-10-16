@@ -111,7 +111,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center gap-2" style="max-width: 320px;">
-                                        <img src="{{ $art->image_url }}" alt="" class="rounded flex-shrink-0" style="width: 44px; height: 32px; object-fit: cover;">
+                                        <img src="{{ $art->image_url }}" alt="" class="rounded flex-shrink-0" style="width: 44px; height: 32px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                                         <div class="text-truncate fw-semibold text-dark" title="{{ $art->title }}">
                                             {{ $art->title }}
                                         </div>

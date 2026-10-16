@@ -68,7 +68,7 @@
                 @forelse($articles as $art)
                     <tr>
                         <td>
-                            <img src="{{ $art->image_url }}" alt="" class="rounded" style="width: 54px; height: 38px; object-fit: cover;">
+                            <img src="{{ $art->image_url }}" alt="" class="rounded" style="width: 54px; height: 38px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/placeholder.png') }}';">
                         </td>
                         <td>
                             <div class="fw-bold text-dark mb-1" style="max-width: 380px;">
