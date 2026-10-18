@@ -20,34 +20,37 @@
         @endforeach
     @endif
     <!-- NewsArticle JSON-LD Structured Data for Search Engines & Social Platforms -->
+    @php
+        $schemaData = [
+            '@context' => 'https://schema.org',
+            '@type' => 'NewsArticle',
+            'mainEntityOfPage' => [
+                '@type' => 'WebPage',
+                '@id' => route('article.show', $article->slug),
+            ],
+            'headline' => $article->title,
+            'image' => [$article->image_url],
+            'datePublished' => $article->published_at ? $article->published_at->toIso8601String() : $article->created_at->toIso8601String(),
+            'dateModified' => $article->updated_at->toIso8601String(),
+            'author' => [
+                [
+                    '@type' => 'Person',
+                    'name' => $article->author->name ?? 'Staff Correspondent',
+                ]
+            ],
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => 'World Eyes News',
+                'logo' => [
+                    '@type' => 'ImageObject',
+                    'url' => asset('images/world_eyes_news_main_logo.png'),
+                ]
+            ],
+            'description' => $article->meta_description ?? ($article->summary ?? Str::limit(strip_tags($article->content), 160)),
+        ];
+    @endphp
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "NewsArticle",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": {{ json_encode(route('article.show', $article->slug)) }}
-        },
-        "headline": {{ json_encode($article->title) }},
-        "image": [
-            {{ json_encode($article->image_url) }}
-        ],
-        "datePublished": {{ json_encode($article->published_at ? $article->published_at->toIso8601String() : $article->created_at->toIso8601String()) }},
-        "dateModified": {{ json_encode($article->updated_at->toIso8601String()) }},
-        "author": [{
-            "@type": "Person",
-            "name": {{ json_encode($article->author->name ?? 'Staff Correspondent') }}
-        }],
-        "publisher": {
-            "@type": "Organization",
-            "name": "World Eyes News",
-            "logo": {
-                "@type": "ImageObject",
-                "url": {{ json_encode(asset('images/world_eyes_news_main_logo.png')) }}
-            }
-        },
-        "description": {{ json_encode($article->meta_description ?? ($article->summary ?? Str::limit(strip_tags($article->content), 160))) }}
-    }
+    {!! json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 @endsection
 
