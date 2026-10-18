@@ -172,5 +172,40 @@
         </div>
     </section>
 
+    <!-- Contact & Editorial Inquiries -->
+    <section class="mb-5">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+            <div class="card-body p-4 p-md-5 text-white">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <span class="badge bg-danger text-uppercase fw-bold px-3 py-2 mb-3">
+                            <i class="fa-solid fa-envelope-open-text me-1"></i> Editorial Desk & Inquiries
+                        </span>
+                        <h3 class="fw-bold serif-font text-white mb-2">Connect With Our Newsroom</h3>
+                        <p class="text-light opacity-75 mb-4" style="line-height: 1.7; max-width: 620px;">
+                            For breaking news tips, press releases, story corrections, editorial feedback, and business partnerships, write directly to our editorial board:
+                        </p>
+                        <div class="d-inline-flex align-items-center gap-3 p-3 rounded-3 bg-black bg-opacity-30 border border-secondary border-opacity-25 flex-wrap">
+                            <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
+                                <i class="fa-solid fa-envelope fs-5"></i>
+                            </div>
+                            <div>
+                                <div class="small text-light opacity-75 fw-semibold">Official Editorial Email</div>
+                                <a href="mailto:worldeyesnetwork@gmail.com" class="text-white fw-bold fs-5 text-decoration-none">
+                                    worldeyesnetwork@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-lg-end text-center">
+                        <a href="mailto:worldeyesnetwork@gmail.com" class="btn btn-danger btn-lg px-4 py-3 fw-bold rounded-pill shadow">
+                            <i class="fa-solid fa-paper-plane me-2"></i> Send Us An Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 @endsection

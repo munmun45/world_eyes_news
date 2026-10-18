@@ -83,19 +83,48 @@ class Article extends Model
         if (empty($this->image)) {
             return asset('images/placeholder.png');
         }
-        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
-            return $this->image;
+
+        $imagePath = trim($this->image);
+
+        // Protocol-relative URLs (e.g. //example.com/photo.jpg)
+        if (str_starts_with($imagePath, '//')) {
+            return (request()->isSecure() ? 'https:' : 'http:') . $imagePath;
         }
-        if (str_starts_with($this->image, 'images/')) {
-            if (file_exists(public_path($this->image))) {
-                return asset($this->image);
-            }
-            return asset('images/placeholder.png');
+
+        // External full URL
+        if (str_starts_with($imagePath, 'http://') || str_starts_with($imagePath, 'https://')) {
+            return $imagePath;
         }
-        if (file_exists(public_path('storage/' . $this->image))) {
-            return asset('storage/' . $this->image);
+
+        $cleanPath = ltrim($imagePath, '/\\');
+
+        // Path explicitly starting with 'uploads/' or 'images/'
+        if (str_starts_with($cleanPath, 'uploads/') || str_starts_with($cleanPath, 'images/')) {
+            return asset($cleanPath);
         }
-        return asset('images/placeholder.png');
+
+        // Path explicitly starting with 'storage/'
+        if (str_starts_with($cleanPath, 'storage/')) {
+            return asset($cleanPath);
+        }
+
+        // Check if file exists in public/uploads/
+        if (file_exists(public_path('uploads/' . $cleanPath))) {
+            return asset('uploads/' . $cleanPath);
+        }
+
+        // Check if file exists directly in public/images/
+        if (file_exists(public_path('images/' . $cleanPath))) {
+            return asset('images/' . $cleanPath);
+        }
+
+        // Check if file exists directly in public/
+        if (file_exists(public_path($cleanPath))) {
+            return asset($cleanPath);
+        }
+
+        // Default to storage asset path (e.g. articles/xyz.jpg -> /storage/articles/xyz.jpg)
+        return asset('storage/' . $cleanPath);
     }
 
     public function getReadingTimeAttribute()

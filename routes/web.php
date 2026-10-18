@@ -75,3 +75,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Storage Fallback Route
+|--------------------------------------------------------------------------
+| Ensures uploaded files in storage/app/public are accessible even if
+| symbolic links are not configured or supported by the web hosting server.
+*/
+Route::get('/storage/{path}', function ($path) {
+    $filePath = storage_path('app/public/' . $path);
+    if (file_exists($filePath)) {
+        return response()->file($filePath);
+    }
+    abort(404);
+})->where('path', '.*');
+

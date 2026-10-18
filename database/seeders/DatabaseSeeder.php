@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         $settings = [
             'site_name' => 'World Eyes News',
             'tagline' => 'Bringing The World Closer',
-            'contact_email' => 'contact@worldeyesnews.com',
+            'contact_email' => 'worldeyesnetwork@gmail.com',
             'contact_phone' => '',
             'address' => '',
             'about_text' => 'World Eyes News is an MSME-registered and SSL-secured digital news media platform, managed by qualified journalists and committed to responsible, accurate, and ethical journalism.',

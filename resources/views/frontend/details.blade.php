@@ -3,6 +3,85 @@
 @section('title', $article->title . ' - World Eyes News')
 @section('meta_description', $article->meta_description ?? $article->summary)
 
+@push('styles')
+<style>
+    .article-body {
+        font-size: 1.125rem;
+        line-height: 1.85;
+        color: #1e293b;
+        word-break: break-word;
+    }
+    .article-body p {
+        margin-bottom: 1.35rem;
+    }
+    .article-body h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #0f172a;
+        line-height: 1.3;
+    }
+    .article-body h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-top: 1.75rem;
+        margin-bottom: 0.85rem;
+        color: #0f172a;
+        line-height: 1.35;
+    }
+    .article-body h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #1e293b;
+    }
+    .article-body a {
+        color: #dc2626;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        font-weight: 500;
+        transition: color 0.15s ease;
+    }
+    .article-body a:hover {
+        color: #991b1b;
+    }
+    .article-body img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1.75rem auto;
+        display: block;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+    .article-body blockquote {
+        border-left: 4px solid #dc2626;
+        padding: 0.85rem 1.25rem;
+        margin: 1.75rem 0;
+        background-color: #f8fafc;
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+        color: #475569;
+        font-size: 1.15rem;
+    }
+    .article-body ul, .article-body ol {
+        margin-bottom: 1.35rem;
+        padding-left: 1.75rem;
+    }
+    .article-body li {
+        margin-bottom: 0.5rem;
+    }
+    .article-body code {
+        background-color: #f1f5f9;
+        color: #e11d48;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="container">
 

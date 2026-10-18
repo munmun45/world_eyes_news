@@ -160,7 +160,7 @@
                     <div class="fw-bold text-dark mb-1">Editorial & Legal Inquiries:</div>
                     <div><strong>Organization:</strong> World Eyes News</div>
                     <div><strong>Tagline:</strong> {{ $siteSettings['tagline'] ?? 'Bringing The World Closer' }}</div>
-                    <div><strong>Legal Contact:</strong> <a href="mailto:{{ $siteSettings['contact_email'] ?? 'contact@worldeyesnews.com' }}" class="text-danger fw-semibold">{{ $siteSettings['contact_email'] ?? 'contact@worldeyesnews.com' }}</a></div>
+                    <div><strong>Legal Contact:</strong> <a href="mailto:{{ $siteSettings['contact_email'] ?? 'worldeyesnetwork@gmail.com' }}" class="text-danger fw-semibold">{{ $siteSettings['contact_email'] ?? 'worldeyesnetwork@gmail.com' }}</a></div>
                 </div>
             </div>
 

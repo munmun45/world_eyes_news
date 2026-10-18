@@ -943,7 +943,7 @@
                     <p class="small text-secondary mb-2">World Eyes News is an MSME-registered &amp; SSL-secured digital news media platform, managed by qualified journalists adhering to PCI &amp; MIB guidelines.</p>
                     <div class="small text-secondary mb-2">
                         <i class="fa-solid fa-envelope text-danger me-2"></i>
-                        <a href="mailto:{{ $siteSettings['contact_email'] ?? 'contact@worldeyesnews.com' }}" class="text-secondary text-decoration-none">{{ $siteSettings['contact_email'] ?? 'contact@worldeyesnews.com' }}</a>
+                        <a href="mailto:{{ $siteSettings['contact_email'] ?? 'worldeyesnetwork@gmail.com' }}" class="text-secondary text-decoration-none">{{ $siteSettings['contact_email'] ?? 'worldeyesnetwork@gmail.com' }}</a>
                     </div>
                     <div class="small text-secondary">
                         <i class="fa-solid fa-shield-halved text-success me-2"></i> Verified Digital Journalism

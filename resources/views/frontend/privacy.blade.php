@@ -170,7 +170,7 @@
                 <div class="p-3 bg-light rounded-3 text-secondary mt-3">
                     <div class="fw-bold text-dark mb-1">Grievance & Privacy Desk:</div>
                     <div><strong>Platform:</strong> World Eyes News (MSME Registered)</div>
-                    <div><strong>Email:</strong> <a href="mailto:{{ $siteSettings['contact_email'] ?? 'contact@worldeyesnews.com' }}" class="text-danger fw-semibold">{{ $siteSettings['contact_email'] ?? 'contact@worldeyesnews.com' }}</a></div>
+                    <div><strong>Email:</strong> <a href="mailto:{{ $siteSettings['contact_email'] ?? 'worldeyesnetwork@gmail.com' }}" class="text-danger fw-semibold">{{ $siteSettings['contact_email'] ?? 'worldeyesnetwork@gmail.com' }}</a></div>
                     <div><strong>Editorial Office:</strong> {{ $siteSettings['address'] ?? 'World News Media Tower, New York, NY' }}</div>
                 </div>
             </div>
