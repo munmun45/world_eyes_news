@@ -8,7 +8,12 @@
 @section('og_url', route('article.show', $article->slug))
 @section('og_title', $article->meta_title ?? $article->title)
 @section('og_description', $article->meta_description ?? ($article->summary ?? Str::limit(strip_tags($article->content), 160)))
+@php
+    $imageExtension = strtolower(pathinfo(parse_url($article->image_url, PHP_URL_PATH) ?? '', PATHINFO_EXTENSION));
+    $imageMime = ($imageExtension === 'png') ? 'image/png' : (($imageExtension === 'webp') ? 'image/webp' : 'image/jpeg');
+@endphp
 @section('og_image', $article->image_url)
+@section('og_image_type', $imageMime)
 
 @section('extra_og_tags')
     <meta property="article:published_time" content="{{ $article->published_at ? $article->published_at->toIso8601String() : $article->created_at->toIso8601String() }}">
