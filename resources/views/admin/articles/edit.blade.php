@@ -362,6 +362,9 @@
     function previewImage(event) {
         const input = event.target;
         if (input.files && input.files[0]) {
+            const urlInput = document.getElementById('imageUrlInput');
+            if (urlInput) urlInput.value = '';
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('currentImageDisplay').src = e.target.result;
@@ -373,6 +376,9 @@
     function previewUrl(url) {
         url = url.trim();
         if (url) {
+            const fileInput = document.querySelector('input[type="file"][name="image"]');
+            if (fileInput) fileInput.value = '';
+
             if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
                 url = 'https://' + url;
             }
