@@ -1,7 +1,55 @@
 @extends('layouts.app')
 
-@section('title', $article->title . ' - World Eyes News')
-@section('meta_description', $article->meta_description ?? $article->summary)
+@section('title', ($article->meta_title ?? $article->title) . ' - World Eyes News')
+@section('meta_description', $article->meta_description ?? ($article->summary ?? Str::limit(strip_tags($article->content), 160)))
+@section('canonical_url', route('article.show', $article->slug))
+
+@section('og_type', 'article')
+@section('og_url', route('article.show', $article->slug))
+@section('og_title', $article->meta_title ?? $article->title)
+@section('og_description', $article->meta_description ?? ($article->summary ?? Str::limit(strip_tags($article->content), 160)))
+@section('og_image', $article->image_url)
+
+@section('extra_og_tags')
+    <meta property="article:published_time" content="{{ $article->published_at ? $article->published_at->toIso8601String() : $article->created_at->toIso8601String() }}">
+    <meta property="article:modified_time" content="{{ $article->updated_at->toIso8601String() }}">
+    <meta property="article:section" content="{{ $article->category->name ?? 'News' }}">
+    @if($article->tags)
+        @foreach(explode(',', $article->tags) as $tag)
+            <meta property="article:tag" content="{{ trim($tag) }}">
+        @endforeach
+    @endif
+    <!-- NewsArticle JSON-LD Structured Data for Search Engines & Social Platforms -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": {{ json_encode(route('article.show', $article->slug)) }}
+        },
+        "headline": {{ json_encode($article->title) }},
+        "image": [
+            {{ json_encode($article->image_url) }}
+        ],
+        "datePublished": {{ json_encode($article->published_at ? $article->published_at->toIso8601String() : $article->created_at->toIso8601String()) }},
+        "dateModified": {{ json_encode($article->updated_at->toIso8601String()) }},
+        "author": [{
+            "@type": "Person",
+            "name": {{ json_encode($article->author->name ?? 'Staff Correspondent') }}
+        }],
+        "publisher": {
+            "@type": "Organization",
+            "name": "World Eyes News",
+            "logo": {
+                "@type": "ImageObject",
+                "url": {{ json_encode(asset('images/world_eyes_news_main_logo.png')) }}
+            }
+        },
+        "description": {{ json_encode($article->meta_description ?? ($article->summary ?? Str::limit(strip_tags($article->content), 160))) }}
+    }
+    </script>
+@endsection
 
 @push('styles')
 <style>
@@ -140,12 +188,14 @@
                 </div>
 
                 <!-- Share Buttons -->
-                <div class="d-flex align-items-center gap-2">
-                    <span class="small text-muted fw-semibold me-1">Share:</span>
-                    <a href="https://twitter.com/intent/tweet?text={{ urlencode($article->title) }}&url={{ urlencode(request()->url()) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://api.whatsapp.com/send?text={{ urlencode($article->title . ' ' . request()->url()) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="WhatsApp"><i class="fa-brands fa-whatsapp text-success"></i></a>
-                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle" style="width:34px;height:34px;" title="Copy Link" onclick="navigator.clipboard.writeText(window.location.href); this.innerHTML='<i class=\'fa-solid fa-check text-success\'></i>'; setTimeout(() => this.innerHTML='<i class=\'fa-regular fa-copy\'></i>', 2000);"><i class="fa-regular fa-copy"></i></button>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="small text-muted fw-semibold me-1"><i class="fa-solid fa-share-nodes text-danger me-1"></i> Share:</span>
+                    <a href="https://api.whatsapp.com/send?text={{ rawurlencode($article->title . "\n\n" . route('article.show', $article->slug)) }}" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 d-inline-flex align-items-center gap-1 shadow-sm" title="Share on WhatsApp"><i class="fa-brands fa-whatsapp fs-6"></i><span class="small fw-bold">WhatsApp</span></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ rawurlencode(route('article.show', $article->slug)) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Share on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/intent/tweet?text={{ rawurlencode($article->title) }}&url={{ rawurlencode(route('article.show', $article->slug)) }}" target="_blank" class="btn btn-sm btn-outline-dark rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Share on X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://t.me/share/url?url={{ rawurlencode(route('article.show', $article->slug)) }}&text={{ rawurlencode($article->title) }}" target="_blank" class="btn btn-sm btn-outline-info rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Share on Telegram"><i class="fa-brands fa-telegram"></i></a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Copy Story Link" onclick="navigator.clipboard.writeText('{{ route('article.show', $article->slug) }}'); this.innerHTML='<i class=\'fa-solid fa-check text-success\'></i>'; setTimeout(() => this.innerHTML='<i class=\'fa-regular fa-copy\'></i>', 2000);"><i class="fa-regular fa-copy"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger rounded-circle d-inline-flex align-items-center justify-content-center d-md-none" style="width:34px;height:34px;" title="Share via Mobile" onclick="if(navigator.share){navigator.share({title:{{ json_encode($article->title) }},text:{{ json_encode($article->meta_description ?? ($article->summary ?? '')) }},url:{{ json_encode(route('article.show', $article->slug)) }}});}"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
                 </div>
             </div>
 
@@ -177,6 +227,22 @@
                     @endforeach
                 </div>
             @endif
+
+            <!-- Share Bar Bottom Callout -->
+            <div class="p-3 my-4 bg-light rounded-3 border d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-share-nodes text-danger fs-5"></i>
+                    <span class="fw-bold text-dark small">Liked this story? Share with your friends:</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="https://api.whatsapp.com/send?text={{ rawurlencode($article->title . "\n\n" . route('article.show', $article->slug)) }}" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 fw-bold d-inline-flex align-items-center gap-1 shadow-sm">
+                        <i class="fa-brands fa-whatsapp fs-6"></i> WhatsApp
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ rawurlencode(route('article.show', $article->slug)) }}" target="_blank" class="btn btn-sm btn-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/intent/tweet?text={{ rawurlencode($article->title) }}&url={{ rawurlencode(route('article.show', $article->slug)) }}" target="_blank" class="btn btn-sm btn-dark rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://t.me/share/url?url={{ rawurlencode(route('article.show', $article->slug)) }}&text={{ rawurlencode($article->title) }}" target="_blank" class="btn btn-sm btn-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
 
             <!-- Prev / Next Navigation -->
             <div class="row g-3 my-4 py-3 border-top border-bottom">

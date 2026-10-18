@@ -93,6 +93,9 @@ class Article extends Model
 
         // External full URL
         if (str_starts_with($imagePath, 'http://') || str_starts_with($imagePath, 'https://')) {
+            if (request()->isSecure() && str_starts_with($imagePath, 'http://')) {
+                return 'https://' . substr($imagePath, 7);
+            }
             return $imagePath;
         }
 

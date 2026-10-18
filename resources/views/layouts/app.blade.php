@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', $siteSettings['site_name'] ?? 'World Eyes News') - {{ $siteSettings['tagline'] ?? 'Bringing The World Closer' }}</title>
+    <title>@yield('title', ($siteSettings['site_name'] ?? 'World Eyes News') . ' - ' . ($siteSettings['tagline'] ?? 'Bringing The World Closer'))</title>
     <meta name="description" content="@yield('meta_description', $siteSettings['about_text'] ?? 'World Eyes News - Bringing The World Closer. Verified news, in-depth reports, and breaking updates.')">
+    <link rel="canonical" href="@yield('canonical_url', url()->current())">
+
+    <!-- Open Graph (Facebook, WhatsApp, Instagram, LinkedIn, Telegram) -->
+    <meta property="og:site_name" content="{{ $siteSettings['site_name'] ?? 'World Eyes News' }}">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="@yield('og_url', url()->current())">
+    <meta property="og:title" content="@yield('og_title', ($siteSettings['site_name'] ?? 'World Eyes News') . ' - ' . ($siteSettings['tagline'] ?? 'Bringing The World Closer'))">
+    <meta property="og:description" content="@yield('og_description', $siteSettings['about_text'] ?? 'World Eyes News - Bringing The World Closer. Verified news, in-depth reports, and breaking updates.')">
+    <meta property="og:image" content="@yield('og_image', asset('images/world_eyes_news_main_logo.png'))">
+    <meta property="og:image:secure_url" content="@yield('og_image', asset('images/world_eyes_news_main_logo.png'))">
+    <meta property="og:image:width" content="@yield('og_image_width', '1200')">
+    <meta property="og:image:height" content="@yield('og_image_height', '630')">
+    <meta property="og:image:alt" content="@yield('og_title', $siteSettings['site_name'] ?? 'World Eyes News')">
+    <meta property="og:locale" content="en_US">
+    @yield('extra_og_tags')
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@worldeyesnet">
+    <meta name="twitter:creator" content="@worldeyesnet">
+    <meta name="twitter:url" content="@yield('og_url', url()->current())">
+    <meta name="twitter:title" content="@yield('og_title', ($siteSettings['site_name'] ?? 'World Eyes News'))">
+    <meta name="twitter:description" content="@yield('og_description', $siteSettings['about_text'] ?? 'World Eyes News - Bringing The World Closer.')">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/world_eyes_news_main_logo.png'))">
 
     <!-- Favicon & App Icons -->
     <link rel="icon" href="{{ asset('favicon.ico') }}">
